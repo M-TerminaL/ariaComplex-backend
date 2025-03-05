@@ -1,0 +1,74 @@
+{% extends 'shared/base1.html' %}
+{% load static %}
+
+{% block title %}
+    فعال سازی حساب کاربری
+{% endblock %}
+
+
+{% block content %}
+    <div class="activate-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 pt-2 header-sign-up">
+                    <p class="text-center">فعال سازی حساب کاربری</p>
+                </div>
+                <div class="col-12 logo-form">
+                    <img src="{% static 'images/logo/logo_aria_complex_prev_ui.png' %}" alt="مجموعه ورزشی آریا">
+                </div>
+                <div class="col-12 pt-2">
+                    <form action="{% url 'activate_account_page' %}" method="post">
+                        {% csrf_token %}
+                        <label for="phoneNum1" class="d-inline-block pt-2 mob-label">کد پیامک شده به موبایلتان را وارد
+                            نمایید.</label>
+                        {% if is_timer_active %}
+                            <span id="countdown" class="text-danger"></span>
+                        {% else %}
+                            <span id="countdown" class="d-none"></span>
+                        {% endif %}
+
+                        <div class="input-nums">
+                            {{ activate_form.one }}
+                            {{ activate_form.two }}
+                            {{ activate_form.three }}
+                            {{ activate_form.four }}
+                            {{ activate_form.five }}
+                        </div>
+                        <button type="submit" class="signup-btn mt-4 d-inline me-1">فعال سازی</button>
+                        <span class="erro text-danger text-small">{{ err }}</span>
+                        <span class="erro text-danger text-xsmall">{{ err1 }}</span>
+
+
+                    </form>
+                    <div class="container">
+                        <div class="row main-login-btns">
+                            <div class="col-6 ps-4">
+                                <a href="{% url 'register_page' %}" id="login">
+                                    ثبت نام
+                                    <i class="bi bi-arrow-up-square-fill"></i>
+                                </a>
+
+                            </div>
+                            <div class="col-6 ps-4" id="main2">
+                                <a href="{% url 'home_page' %}">
+                                    صفحه اصلی
+                                    <i class="bi bi-house-up-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="client-form-rotate-activate"></div>
+{% endblock %}
+
+
+
+{% block footer_references %}
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script> <!-- swiper Js -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> <!-- Bootstrap Bundle -->
+    <script src="{% static 'js/app4.js' %}"></script> <!-- js Codes Of Project -->
+    <script src="{% static 'js/timer-countdown.js' %}"></script> <!-- js Codes Of Project -->
+{% endblock %}

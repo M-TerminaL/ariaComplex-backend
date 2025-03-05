@@ -1,0 +1,109 @@
+{% load static %}
+<div class="panel-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-5 ps-0">
+                <div class="name-profile-notif d-md-flex align-items-center">
+                    <div class="line-design-mobile d-md-none"></div>
+                    <div class="line-design-tablet-laptop d-none d-md-block"></div>
+                    <p class="text-center mt-2">
+                        {{ current_user.first_name }} عزیز به پنل کاربری خوش آمدید
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2 text-center text-md-end notif-bell-box">
+
+                <a href="{% url 'message_box_page' %}" class="bell-link" title="پیام جدید">
+                    <span class="badge text-bg-danger rounded-5 p-2">{{ message_count }}</span>
+                    <i class="bi bi-envelope"></i>
+                </a>
+            </div>
+            <div class="col-12 col-md-5 text-center">
+
+                <div class="edit-img-name-box">
+                    <div class="img-profile">
+                        {% if current_user.avatar %}
+                            <img src="{{ current_user.avatar.url }}" alt="آواتار">
+                        {% else %}
+                            <img src="{% static 'images/avatar/avatar.jpg' %}" alt="آواتار">
+                        {% endif %}
+                    </div>
+                    <p class="d-inline-block name-prof">{{ current_user.first_name }} {{ current_user.last_name }}</p>
+                    <span class="d-md-inline-block">
+                                                <a href="{% url 'edit_profile_page' %}">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="fast-access mt-5 ms-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-6 pe-0 ps-0">
+                <div class="fast-access-box1">
+                    <a href="{% url 'user_paid_shopping' %}" class="d-flex fast-link align-items-center">
+                        <div class="green-box">
+                            <i class="bi bi-cart-check"></i>
+                        </div>
+                        <div>
+                            <p>
+                                سفارشات پرداخت شده
+                            </p>
+                            <p>{{ user_paid_count }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 pe-0 ps-0">
+                <div class="fast-access-box2">
+                    <a href="{% url 'user_basket_page' %}" class="d-flex fast-link align-items-center">
+                        <div class="green-box bg-danger">
+                            <i class="bi bi-cart-plus"></i>
+                        </div>
+                        <div>
+                            <p>
+                                سبد خرید من
+                            </p>
+                            <p>{{ user_basket_count }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 pe-0 ps-0">
+                <div class="fast-access-box3">
+                    <a href="{% url 'announcements_page' %}" class="d-flex fast-link align-items-center">
+                        <div class="green-box bg-primary">
+                            <i class="bi bi-bell"></i>
+                        </div>
+                        <div>
+                            <p>
+                                اطلاعیه ها
+                            </p>
+                            <p>{{ announcement_count }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 pe-0 ps-0">
+                <div class="fast-access-box4">
+                    <a href="{% url 'discount_code_page' %}" class="d-flex fast-link align-items-center">
+                        <div class="green-box bg-secondary">
+                            <i class="bi bi-upc-scan"></i>
+                        </div>
+                        <div>
+                            <p>
+                                کد تخفیف
+                            </p>
+                            <p>{{ discount_code_count }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+.errorlist {
+    padding-right: 0 !important;
+    margin-bottom: 0;
+    color: red;
+    font-size: 0.7rem;
+}
+
+#erro {
+    font-size: 0.6rem !important;
+    color: red !important;
+}

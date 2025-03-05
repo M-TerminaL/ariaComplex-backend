@@ -1,0 +1,13 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block title %}
+    404 | یافت نشد
+{% endblock %}
+
+{% block content %}
+    <div id="box-404" class="position-relative text-center mt-5 mb-5">
+        <img src="{% static 'images/404/404.svg' %}" alt="404 - AriaSport">
+        <p class="text-center">ممکن است صفحه ای که به دنبال آن می گردید حذف شده باشد و یا آدرس آن را به درستی وارد نکرده باشید.</p>
+    </div>
+{% endblock %}

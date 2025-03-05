@@ -1,0 +1,44 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+    نتیجه پرداخت
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                {% if success %}
+                    <p class="alert alert-success">
+                        {{ success }}
+                    </p>
+                {% endif %}
+                {% if error1 %}
+                    <p class="alert alert-danger">
+                        {{ error1 }}
+                    </p>
+                {% endif %}
+                {% if error2 %}
+                    <p class="alert alert-danger">
+                        {{ error2 }}
+                    </p>
+                {% endif %}
+                {% if error3 %}
+                    <p class="alert alert-danger">
+                        {{ error3 }}
+                    </p>
+                {% endif %}
+                {% if error4 %}
+                    <p class="alert alert-danger">
+                        {{ error4 }}
+                    </p>
+                {% endif %}
+                {% if error5 %}
+                    <p class="alert alert-danger">
+                        {{ error5 }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

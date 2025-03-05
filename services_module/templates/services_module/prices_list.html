@@ -1,0 +1,91 @@
+{% extends 'shared/base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+{% block meta_description %}
+    <meta name="description" content="بهترین باشگاه ورزشی تهران با تخفیفات ویژه در صورت خرید از سایت مجموعه آریا.">
+{% endblock %}
+
+{% block title %}
+    لیست قیمت ها | مجموعه آریا
+{% endblock %}
+
+{% block content %}
+    <main>
+        <section class="price-item-list-section">
+            <div class="container">
+                <div class="col-12 text-center text-lg-start">
+                    <h1 class="title-price text-danger-emphasis">لیست قیمت های خدمات مجموعه آریا</h1>
+                </div>
+                <div class="row">
+                    {% for service in services %}
+                        {% include 'includes/services_name.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+        <section class="instruction-buy-package-section">
+            <article>
+                <div class="container">
+                    <div class="row contact-box align-items-center">
+                        <div class="col-12 col-md-3 contact-1">
+
+                            {% thumbnail purchase.image_one "x600" quality=100 crop="center" as im %}
+                                <img src="{{ im.url }}" class="img-fluid" alt="محیطی صمیمی ، آرام و دوستانه">
+                            {% endthumbnail %}
+
+                        </div>
+                        <div class="col-12 col-md-6 des-contact mt-3" id="instruction-box">
+                            <h2>{{ purchase.orange_title }}</h2>
+                            <div class="d-flex justify-content-center mb-2">
+                                <img src="{% static 'images/arrow.png' %}" alt="مجموعه ورزشی شمال غرب تهران"
+                                     class="d-block">
+                            </div>
+                            <h4>{{ purchase.black_title }}</h4>
+                            <p>{{ purchase.short_description }}</p>
+                            <p>{{ purchase.description }}</p>
+                            <p class="alert alert-danger">{{ purchase.imp_description }}</p>
+                        </div>
+                        <div class="col-12 col-md-3 contact-1">
+
+                            {% thumbnail purchase.image_two "x600" quality=100 crop="center" as im %}
+                                <img src="{{ im.url }}" class="img-fluid"
+                                     alt="استخر ، سونا ، حرکات اصلاحی ، تناسب اندام">
+                            {% endthumbnail %}
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+
+        <section class="mt-1" id="fix-overflow">
+
+            {% for service in services %}
+                <div class="table-box mb-5">
+                    <div class="main-table mt-1">
+                        {% if service.table_price_box.values %}
+                            <div class="divider-svc text-center mb-3">
+                                <h3 class="text-extrabold text-danger mb-3">{{ service.title }}</h3>
+                                {% if service.discount_title %}
+                                    <div class="discount-box-notif-div">
+                            <span class="discount-notif-box">
+                            {{ service.discount_title }}
+                            </span>
+                                    </div>
+                                {% endif %}
+                                <img src="{% static 'images/arrow.png' %}" alt="قیمت پکیج ها">
+                            </div>
+                        {% endif %}
+                        {% for table_box in service.table_price_box.all %}
+                            {% include 'includes/table_boxes.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+{% endblock %}

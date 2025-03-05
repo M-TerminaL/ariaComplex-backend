@@ -1,0 +1,174 @@
+{% extends 'shared/base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+{% block meta_description %}
+    <meta name="description" content="{{ service.meta_description }}">
+{% endblock %}
+
+{% block title %}
+    {{ service.title }}
+{% endblock %}
+
+{% block content %}
+    <main>
+        <!-- Section -->
+        <div class="section mt-lg-3 ps-lg-4 pe-lg-4">
+            <div class="header-img-service-box position-relative">
+
+                {% thumbnail service.header_img "x600" quality=100 crop="center" as im %}
+                    <img src="{{ im.url }}" class="img-fluid" alt="{{ service.keyword_one }}">
+                {% endthumbnail %}
+
+                <div class="img-content-services position-absolute top-50 start-50 translate-middle">
+                    <h1 class="title-img text-center ">{{ service.title_img_header }}</h1>
+                    {% if service.short_description_of_img_header %}
+                        <h2 class="des-img text-center">{{ service.short_description_of_img_header }}</h2>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        <section class="mt-2 mb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center">
+                            {% if service.items_box.image_icon %}
+                                <img src="{{ service.items_box.image_icon.url }}" alt="{{ service.keyword_two }}"
+                                     width="153" height="102">
+                            {% endif %}
+                        </div>
+                        <div class="divider-svc {% if not service.items_box.image_icon %}d-none{% endif %}">
+                            <img src="{% static 'images/arrow.png' %}" alt="{{ service.keyword_three }}">
+                        </div>
+                        <h3 class="title-svc-items text-extrabold {% if not service.items_box.image_icon %}mt-5{% endif %}">
+                            {{ service.items_box.title }}
+                        </h3>
+
+                        {% if not service.items_box.image_icon %}
+                            <div class="divider-svc">
+                                <img src="{% static 'images/arrow.png' %}" alt="{{ service.keyword_three }}">
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+                <div class="row">
+                    {% for item in service.items_box.items.all %}
+                        {% include 'includes/service_items.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+        <div class="mb-4">
+            <h3 class="text-center text-extrabold title-svc-box">{{ service.introduce_title }}</h3>
+            <div class="divider-svc">
+                <img src="{% static 'images/arrow.png' %}" alt="{{ service.keyword_four }}">
+            </div>
+        </div>
+
+
+        {% for introduce in service.introduce_svc_box.all %}
+            {% include 'includes/introduce_service_box.html' %}
+        {% endfor %}
+
+
+
+        <section class="instruction-buy-package-section">
+            <article>
+                <div class="container">
+                    <div class="row contact-box align-items-center">
+                        <div class="col-12 col-md-3 contact-1">
+
+
+                            {% thumbnail service.purchase_category.image_one "x600" quality=100 crop="center" as im %}
+                                <img src="{{ im.url }}" class="img-fluid" alt="{{ service.title_img_header }}">
+                            {% endthumbnail %}
+
+                        </div>
+                        <div class="col-12 col-md-6 des-contact mt-3" id="instruction-box">
+                            <h2>{{ service.purchase_category.orange_title }}</h2>
+                            <div class="d-flex justify-content-center mb-2">
+                                <img src="{% static 'images/arrow.png' %}" alt="{{ service.keyword_five }}"
+                                     class="d-block">
+                            </div>
+                            <h4>{{ service.purchase_category.black_title }}</h4>
+                            <p>{{ service.purchase_category.short_description }}</p>
+                            <p>{{ service.purchase_category.description }}</p>
+                            <p class="alert alert-danger">{{ service.purchase_category.imp_description }}</p>
+                        </div>
+                        <div class="col-12 col-md-3 contact-1">
+
+                            {% thumbnail service.purchase_category.image_two "x600" quality=100 crop="center" as im %}
+                                <img src="{{ im.url }}" class="img-fluid" alt="{{ service.keyword_six }}">
+                            {% endthumbnail %}
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+
+        <section class="table-price-box mt-5" id="fix-overflow">
+            <div class="table-box mb-5">
+                {% if service.table_price_box.values %}
+                    <div class="title-table">
+                        <h2 class="text-center">لیست قیمت ها</h2>
+                        {% if service.discount_title %}
+                            <div class="discount-box-notif-div">
+                        <span class="discount-notif-box">
+                            {{ service.discount_title }}
+                        </span>
+                            </div>
+                        {% endif %}
+                        <div class="divider-svc text-center mb-3">
+                            <img src="{% static 'images/arrow.png' %}" alt="مجموعه آریا با تخفیفات ویژه">
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="main-table mt-2">
+                    {#                    <div class="divider-svc text-center mb-3">#}
+                    {#                        <img src="{% static 'images/arrow.png' %}" alt="مجموعه آریا با تخفیفات ویژه">#}
+                    {#                    </div>#}
+
+
+
+                    {% for table_box in service.table_price_box.all %}
+                        {% include 'includes/table_boxes.html' with table_box=table_box %}
+                    {% endfor %}
+
+
+                </div>
+            </div>
+        </section>
+
+
+        <article>
+            <div class="services-gallery-container-slider position-relative">
+
+                <img src="{{ service.svc_slider_box.background_img.url }}" alt="keyword_seven">
+                <div class="header-title-slider">
+                    <p class="text-bold">{{ service.svc_slider_box.title }}</p>
+                    <i class="bi bi-images"></i>
+                </div>
+                <div class="slider-gallery mt-5">
+                    <div class="swiper mySwiper swiper-container2 swiper-coverflow swiper-3d swiper-initialized swiper-horizontal swiper-rtl swiper-watch-progress">
+                        <div class="swiper-wrapper" id="swiper-wrapper-ad494228ce270d16" aria-live="off"
+                             style="cursor: grab; transition-duration: 0ms; transform: translate3d(-226px, 0px, 0px); transition-delay: 0ms;">
+                            {% for slider in service.svc_slider_box.svc_slider.all %}
+                                {% include 'includes/slider.html' %}
+                            {% endfor %}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                </div>
+            </div>
+        </article>
+        <!-- ENd Section -->
+    </main>
+{% endblock %}

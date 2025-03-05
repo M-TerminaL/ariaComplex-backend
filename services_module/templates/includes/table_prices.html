@@ -1,0 +1,29 @@
+{% load poll_extras %}
+
+<tr>
+    <td class="pt-3">{{ row.package_name }}</td>
+
+    {% if row.package_description %}
+        <td class="pt-3">{{ row.package_description }}</td>
+        {% else %}
+        <td class="pt-3">-</td>
+    {% endif %}
+
+    {% if row.discount_title %}
+        <td class="pt-3">{{ row.discount_title }}</td>
+    {% else %}
+        <td class="pt-3">-</td>
+    {% endif %}
+    <td class="input-persian-num">
+        <input type="number" min="1" class="package-count text-center" value="1"/>
+    </td>
+
+    <td class="text-extrabold pt-3">{{ row.price | three_digits_currency }}</td>
+
+    <td>
+        <button onclick="addPackageToOrder(this, {{ row.id }})">
+            <i class="bi bi-cart-plus"></i>
+        </button>
+    </td>
+</tr>
+

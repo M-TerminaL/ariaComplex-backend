@@ -1,0 +1,92 @@
+{% extends 'shared/base.html' %}
+{% load render_partial %}
+
+{% block title %}
+    ویرایش اطلاعات کاربری | مجموعه آریا
+{% endblock %}
+
+{% block content %}
+
+    <section class="mt-lg-5 mt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="d-none d-lg-block col-lg-3 mb-3 mt-lg-5">
+                    {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+                </div>
+
+                <div class="col-lg-9 mb-5 pe-0">
+                    <div class="main-profile-content">
+                        {% render_partial 'user_panel_module.views.user_panel_header_component' %}
+
+
+                        <div class="ticket-box mt-3">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="text-center text-danger text-bold">ویرایش اطلاعات</h6>
+                                        <form action="{% url 'edit_profile_page' %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">نام</label>
+                                                {{ form.first_name }}
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput2" class="form-label">نام
+                                                    خانوادگی</label>
+                                                {{ form.last_name }}
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput3" class="form-label">تصویر پروفایل</label>
+                                               {{ form.avatar }}
+                                            </div>
+
+                                            <button type="submit" class="btn-form" id="color-btn">ثبت تغییرات</button>
+                                        </form>
+
+                                        {% if form.errors %}
+                                            <div class="alert alert-danger alert-dismissible fade show mt-4"
+                                                 role="alert">
+                                                <p>{{ form.first_name.errors }}</p>
+                                                <p>{{ form.last_name.errors }}</p>
+                                                <p>{{ form.avatar.errors }}</p>
+
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+
+                                    {% if form.is_valid %}
+                                        <div class="alert alert-success alert-dismissible fade show mt-4"
+                                                 role="alert">
+                                                <p>{{ success }}</p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <button class="btn btn-primary menu-panel-dashboard d-lg-none" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="bi bi-card-list"></i>
+    </button>
+    <section id="offcanvas-content">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+             aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

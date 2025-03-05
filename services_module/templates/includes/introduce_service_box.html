@@ -1,0 +1,40 @@
+<section class="introduce-box mt-5 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="img-service-ico">
+                    {% if introduce.icon %}
+                        <img src="{{ introduce.icon.url }}" alt="بهترین مجموعه ورزشی در غرب تهران">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12 mt-5">
+                <h2 class="text-center text-bold font-style">{{ introduce.title }}</h2>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <p class="text-center font-des-style">
+                    {{ introduce.description }}
+                </p>
+                {% if introduce.description_two %}
+                    <p class="text-center font-des-style">{{ introduce.description_two }}</p>
+                {% endif %}
+
+                {% if introduce.description_three %}
+                    <p class="text-center font-des-style">{{ introduce.description_three }}</p>
+                {% endif %}
+
+                {% if introduce.description_four %}
+                    <p class="text-center font-des-style">{{ introduce.description_four }}</p>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="row">
+            {% for more_detail in introduce.more_detail_introduce.all %}
+                {% include 'includes/mode_detail_introduce.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>

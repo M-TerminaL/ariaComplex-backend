@@ -1,0 +1,251 @@
+{% load thumbnail %}
+{% load static %}
+
+<style>
+    .footer-container {
+        background-color: #151414;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%), url('{{ site_setting.footer_img.url }}') center/cover no-repeat;
+        background-attachment: fixed;
+        -webkit-background-attachment: fixed; /* برای Safari و Chrome */
+        object-fit: cover;
+    }
+</style>
+
+<!-- Footer -->
+<footer class="footer-container">
+    <div class="container">
+        <div class="footer-header">
+            <div class="row">
+                <div class="col-12 col-md-4 pt-5 pb-5">
+                    <div class="single-header">
+                        <div class="header-text d-flex gap-2">
+                            <i class="bi bi-geo-alt-fill fs-2"></i>
+                            <h4 class="mt-2 fs-5">
+                                آدرس
+                            </h4>
+                        </div>
+                        <div class="ms-1">
+                                <span>
+                                   {{ site_setting.address }}
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 pt-5 pb-5">
+                    <div class="single-header">
+                        <div class="header-text d-flex gap-2">
+                            <i class="bi bi-telephone-fill fs-2"></i>
+                            <h4 class="mt-2 ms-1 fs-5">
+                                شماره تماس
+                            </h4>
+                        </div>
+                        <div class="ms-1">
+
+                                <span>
+                                   {{ site_setting.phone_header }}
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 pt-5 pb-5">
+                    <div class="single-header">
+                        <div class="header-text d-flex gap-2">
+                            <i class="bi bi-clock-fill fs-2"></i>
+                            <h4 class="fs-5 mt-2 ms-1">
+                                ساعات کاری
+                            </h4>
+                        </div>
+                        <div class="ms-1">
+
+                                <span>
+                                    {{ site_setting.working_time }}
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="footer-section1 pt-2 pb-5">
+            <div class="row">
+                <div class="col-12 col-lg-4">
+                    <div class="footer-widget1 pt-lg-2">
+                        <div class="footer-logo1 justify-content-lg-center">
+                            <a href="">
+                                <img src="{{ site_setting.site_logo.url }}" alt="logo">
+                            </a>
+                        </div>
+                        <div class="footer-text1 ms-0 mt-2 p-2">
+                            <p class="text-center text-lg-center">
+                                {{ site_setting.about_des }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div
+                        class="col-12 col-lg-4 mt-2 mt-lg-0 d-flex gap-5 ps-2 justify-content-center justify-content-lg-start align-items-md-center">
+
+                    <div class="footer-widget1 pt-lg-1 pb-2 ms-lg-3">
+                        <div class="footer-link-buttons">
+                            <div class="footer-link-container">
+                                <a href="{% url 'home_page' %}">خانه</a>
+                                <a href="{% url 'prices-list' %}">قیمت ها</a>
+                                <a href="{% url 'contact_us_page' %}">تماس با ما</a>
+                                <a href="{% url 'about_us_page' %}">درباره ما</a>
+                            </div>
+                            <div
+                                    class="pt-5 social-media-icons-footer1 text-center d-flex justify-content-center gap-3">
+                                <a href="https://wa.me/{{ site_setting.whatsapp }}" target="_blank"><i
+                                        class="bi bi-whatsapp"></i></a>
+                                <a href="https://t.me/{{ site_setting.telegram }}" target="_blank"><i
+                                        class="bi bi-telegram"></i></a>
+                                <a href="https://www.instagram.com/{{ site_setting.instagram }}" target="_blank"><i
+                                        class="bi bi-instagram"></i></a>
+                                <a href="{{ site_setting.youtube_link }}" target="_blank"><i class="bi bi-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-12 col-lg-4 mb-5 pt-3">
+
+                    <div class="enamad-samandehi-logo d-flex justify-content-center justify-content-lg-start mt-5 mt-lg-4 gap-2">
+
+
+                        {% if site_setting.samandehi_url and site_setting.samandehi_img %}
+                            <div class="e-logo">
+                                <a href="{{ site_setting.samandehi_url }}" target="_blank">
+                                    <img src="{{ site_setting.samandehi_img.url }}" alt="Samandehi - ساماندهی">
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        {% if site_setting.enamad_url and site_setting.enamad_img %}
+                            <div class="e-logo">
+                                <a href="{{ site_setting.enamad_url }}" target="_blank">
+                                    <img src="{{ site_setting.enamad_img.url }}" alt="E-namad - ای نماد">
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        {#                        {% if not site_setting.samandehi_img and not site_setting.enamad_img %}#}
+                        {#                            <img width="300" height="150" src="{% static 'images/nama-building/contact-us.jpg' %}"#}
+                        {#                                 alt="آریا" class="img-fluid d-none d-lg-block">#}
+                        {#                        {% endif %}#}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="footer-footer">
+            <div class="footer-copy-right">
+                <div class="row">
+                    <div class="col-12 col-md-6 text-center text-md-start">
+                        <p>
+                            {{ site_setting.copy_right }}
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 text-center text-md-end">
+                        {{ site_setting.developer }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="help-footer-menu-mobile d-lg-none">
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+    </div>
+
+
+</footer>
+<!-- mobile menu footer -->
+{% if request.user.is_authenticated %}
+    <div class="mobile-footer d-lg-none">
+        <div class="parent">
+            <div class="box box1">
+                <a href="#" class="footer-mob-link" id="arrow-up">
+                    <i class="bi bi-arrow-up-short"></i>
+                </a>
+            </div>
+            <div class="box box2">
+                <a href="{% url 'prices-list' %}" class="footer-mob-link">
+                    <i class="bi bi-list-columns"></i>
+                </a>
+            </div>
+            <div class="box box3">
+
+                <a href="{% url 'user_panel_dashboard_page' %}" class="footer-mob-link">
+                    <i class="bi bi-person-fill-gear"></i>
+                </a>
+
+            </div>
+            <div class="box box4">
+                <a href="{% url 'user_basket_page' %}" class="footer-mob-link">
+                    <i class="bi bi-basket-fill"></i>
+                </a>
+            </div>
+            <div class="box box5">
+                <a href="{% url 'home_page' %}" class="footer-mob-link">
+                    <i class="bi bi-house-door-fill"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="mobile-footer d-lg-none">
+        <div class="parent">
+            <div class="box box1">
+                <a href="#" class="footer-mob-link" id="arrow-up">
+                    <i class="bi bi-arrow-up-short"></i>
+                </a>
+            </div>
+            <div class="box box2">
+                <a href="{% url 'prices-list' %}" class="footer-mob-link">
+                    <i class="bi bi-list-columns"></i>
+                </a>
+            </div>
+            <div class="box box3">
+
+                <a href="{% url 'login_page' %}" class="footer-mob-link">
+                    <i class="bi bi-person-fill-gear"></i>
+                </a>
+
+            </div>
+            <div class="box box4">
+                <a href="{% url 'login_page' %}" class="footer-mob-link">
+                    <i class="bi bi-basket-fill"></i>
+                </a>
+            </div>
+            <div class="box box5">
+                <a href="{% url 'home_page' %}" class="footer-mob-link">
+                    <i class="bi bi-house-door-fill"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<!-- end mobile menu -->
+<!-- whatsapp btn mobile -->
+<div class="whatsapp-btn-mobile">
+    <a href="https://wa.me/{{ site_setting.whatsapp }}" class="_collapz_parant">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+</div>
+<!-- end whatsapp btn mobile -->
+<!--end footer-->

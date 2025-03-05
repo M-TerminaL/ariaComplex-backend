@@ -1,0 +1,17 @@
+<div class="col-6 col-lg-4 gy-4">
+
+    <div class="price-item-list-container">
+        <p>{{ service.title }}</p>
+        <div class="rating-and-view-box d-sm-flex justify-content-between">
+            <div class="star-container">
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+            </div>
+            <a href="{% url 'services-detail' slug=service.slug %}">مشاهده</a>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,191 @@
+{% load static %}
+<!-- header -->
+<div class="text-center" id="preloader-container">
+    <img id="preloader" src="{% static 'images/preloader-gif/old.gif' %}" alt="لطفا کمی صبر کنید ...">
+</div>
+<nav class="navbar-mobile d-lg-none" id="navbar-mob">
+    <div id="close" class="navbar-close">
+            <span class="nav-close">
+                <i class="bi bi-x"></i>
+            </span>
+    </div>
+    <div class="navbar-header d-flex justify-content-center align-items-center">
+        <button id="menu">منو</button>
+        <button id="category">خدمات</button>
+    </div>
+    <div class="navbar-list-box">
+        <ul id="menu-items">
+            <li><a href="{% url 'home_page' %}" class="navbar-link {% if request.resolver_match.url_name == 'home_page' %}active-menu-mobile{% endif %}"><i class="bi bi-house-fill"></i>خانه</a></li>
+            <li><a href="{% url 'prices-list' %}" class="navbar-link {% if request.resolver_match.url_name == 'prices-list' %}active-menu-mobile{% endif %}"><i class="bi bi-list-columns"></i>لیست قیمت ها</a></li>
+            <li><a href="{% url 'contact_us_page' %}" class="navbar-link {% if request.resolver_match.url_name == 'contact_us_page' %}active-menu-mobile{% endif %}"><i class="bi bi-chat-right-dots-fill"></i>تماس با ما</a></li>
+            <li><a href="{% url 'about_us_page' %}" class="navbar-link {% if request.resolver_match.url_name == 'about_us_page' %}active-menu-mobile{% endif %}"><i class="bi bi-info-circle-fill"></i>درباره ما</a></li>
+
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'user_panel_dashboard_page' %}" class="navbar-link"><i class="bi bi-person-vcard"></i>پنل
+                    کاربری</a></li>
+                <li><a href="{% url 'logout' %}" class="navbar-link"><i class="bi bi-escape fs-4"></i>خروج</a></li>
+            {% else %}
+                <li><a href="{% url 'login_page' %}" class="navbar-link"><i
+                        class="bi bi-box-arrow-in-right"></i>ورود</a></li>
+                <li><a href="{% url 'register_page' %}" class="navbar-link"><i class="bi bi-person-fill-add"></i>ثبت نام</a>
+                </li>
+            {% endif %}
+        </ul>
+
+        <ul id="category-items">
+            {% for service in services %}
+                <li><a href="{% url 'services-detail' slug=service.slug %}" class="navbar-link">{{ service.title }}</a></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+
+</nav>
+<header id="header"> <!-- Header -->
+    <div class="notification-bar text-center">
+        <p> شماره تماس : {{ site_setting.phone_notif }}</p>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div class="logo d-flex">
+                    <a href="{% url 'home_page' %}">
+                        <img src="{{ site_setting.site_logo.url }}" alt="مجموعه ورزشی آریا">
+                    </a>
+                    <div class="divider"></div>
+                    <div class="slogan">
+                        <h2 class="text-xlarge text-bold">{{ site_setting.slogan_one }}</h2>
+                        <h6 class=".text-UltraLight">{{ site_setting.slogan_two }}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 d-lg-none responsive-menu">
+                <button class="btn-menu-responsive" id="menu-btn">
+                    <i class="bi bi-list"></i>
+                </button>
+
+            </div>
+            <div class="d-none d-lg-block col-lg-6 position-relative">
+                {% if request.user.is_authenticated %}
+                    <div class="header-panel-box">
+                        <div class="header-btn">
+                            <a href="{% url 'user_panel_dashboard_page' %}" class="btn-main btn-card-register "><i
+                                    class="bi bi-person-vcard fs-4"></i>پنل کاربری</a>
+                        </div>
+                        <div class="header-btn">
+                            <a href="{% url 'logout' %}" class="btn-main btn-sign-in"><i class="bi bi-escape fs-4"></i>خروج</a>
+                        </div>
+
+
+                        <a href="{% url 'user_basket_page' %}" title="سبد خرید" class="btn btn-primary position-relative">
+                            <i class="bi bi-basket-fill"></i>
+                            <span
+                                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle badge badge-font">
+                                {{ user_basket_count }}
+                            </span>
+                        </a>
+
+
+                    </div>
+                {% else %}
+                    <div class="header-panel-box">
+                        <div class="header-btn">
+                            <a href="{% url 'register_page' %}" class="btn-main btn-card-register "><i
+                                    class="bi bi-credit-card-2-front-fill fs-4"></i>ثبت نام</a>
+                        </div>
+                        <div class="header-btn">
+                            <a href="{% url 'login_page' %}" class="btn-main btn-sign-in"><i
+                                    class="bi bi-person-fill fs-4"></i>ورود</a>
+                        </div>
+
+                        <a href="{% url 'login_page' %}" title="برای مشاهده سبد خرید ابتدا وارد سایت شوید" class="btn btn-primary position-relative">
+                            <i class="bi bi-basket-fill"></i>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+</header>
+
+
+<!-- menu in header  position sticky / parent elem should be receive this property -->
+<div class="mega-menu-parent d-none d-lg-block position-sticky top-0 ">
+    <div class="container-fluid">
+        <div class="header-top-menu align-items-center">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="header-top-menu-right">
+                        <ul class="menu-list">
+                            <li id="no-sub-home"><a href="{% url 'home_page' %}" id="home" class="{% if request.resolver_match.url_name == 'home_page' %}active-menu{% endif %}">صفحه اصلی</a><span
+                                    class="d-block underline1"></span></li>
+                            <li>
+                                <a href="javascript:void(0)" id="services">خدمات</a><span
+                                    class="d-block underline2"></span>
+                            </li>
+                            <li id="no-sub-price"><a href="{% url 'prices-list' %}" id="prices" class="{% if request.resolver_match.url_name == 'prices-list' %}active-menu{% endif %}">لیست قیمت ها</a><span
+                                    class="d-block underline3"></span></li>
+                            <li id="no-sub-contact"><a href="{% url 'contact_us_page' %}" id="contact" class="{% if request.resolver_match.url_name == 'contact_us_page' %}active-menu{% endif %}">تماس با ما</a><span
+                                    class="d-block underline4"></span></li>
+                            <li id="no-sub-about"><a href="{% url 'about_us_page' %}" id="about" class="{% if request.resolver_match.url_name == 'about_us_page' %}active-menu{% endif %}">درباره ما</a><span
+                                    class="d-block underline5"></span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="social-media-phone-box d-flex justify-content-center align-items-center">
+                        <div class="phone-number">
+                            <p>
+                                {{ site_setting.phone_header }} <i class="bi bi-telephone-inbound-fill tel"></i>
+                            </p>
+                        </div>
+                        <div class="social-media-box d-flex justify-content-center">
+                            <div class="media-box">
+                                <a href="https://wa.me/{{ site_setting.whatsapp }}" class="media1" target="_blank">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+                            </div>
+                            <div class="media-box">
+                                <a href="https://t.me/{{ site_setting.telegram }}" class="media2" target="_blank">
+                                    <i class="bi bi-telegram"></i>
+                                </a>
+                            </div>
+                            <div class="media-box">
+                                <a href="https://www.instagram.com/{{ site_setting.instagram }}" class="media3" target="_blank">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                            </div>
+                            <div class="media-box">
+                                <a href="{{ site_setting.location_link }}" class="media4" target="_blank">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="svc-list" id="sub-menu">
+        <div class="svc-box-box">
+            <ul>
+
+                {% for service in services %}
+                    <li><a href="{% url 'services-detail' slug=service.slug %}">{{ service.title }}</a></li>
+                {% endfor %}
+
+
+                {#                <li><a href="">استخر</a></li>#}
+                {#                <li><a href="">باشگاه بدنسازی بانوان</a></li>#}
+                {#                <li><a href="">VIP</a></li>#}
+                {#                <li><a href="">آب درمانی</a></li>#}
+                {#                <li><a href="">دوفیکا</a></li>#}
+                {#                <li><a href="">سالن چند منظوره</a></li>#}
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- end menu in header  position sticky / parent elem should be receive this property -->
+<!-- end of header -->

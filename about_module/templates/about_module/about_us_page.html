@@ -1,0 +1,94 @@
+{% extends 'shared/base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+
+{% block meta_description %}
+    <meta name="description" content="{{ about_us.meta_description }}">
+{% endblock %}
+
+{% block title %}
+    درباره ما | مجموعه آریا
+{% endblock %}
+
+{% block content %}
+
+    <main class="section mt-lg-3 ps-lg-4 pe-lg-4">
+        <div class="header-img-service-box position-relative contact-us-header-box">
+
+            {% thumbnail about_us.header_img "4096x3072" quality=100 crop="center" as im %}
+                <img src="{{ im.url }}" class="img-fluid" alt="{{ about_us.keyword_one }}">
+            {% endthumbnail %}
+
+            <div class="img-content-services position-absolute top-50 start-50 translate-middle">
+                <h1 class="title-img text-center p-3 rounded-5">{{ about_us.header_title }}</h1>
+                <p class="text-center ">{{ about_us.header_short_description }}</p>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col12">
+                    <div class="aparat-video-title text-center">
+                        <p>
+                            {{ about_us.video_title }}
+                        </p>
+                        <img src="{% static 'images/line-servises-arrow/main.webp' %}" alt="{{ about_us.keyword_two }}">
+                    </div>
+                </div>
+                <div class="col12">
+                    <div class="video-wrapper">
+                        <div class="video-aparat">
+                            <iframe src="{{ about_us.video_link }}" allowfullscreen="true" webkitallowfullscreen="true"
+                                    mozallowfullscreen="true"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="managers text-center">
+
+            {% if about_us.title_managers_records %}
+                <h3 class="mb-5">{{ about_us.title_managers_records }}</h3>
+            {% endif %}
+
+            <div class="container">
+                <div class="row gy-4">
+                    {% for manager in about_us.managers.all %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <img src="{{ manager.profile_img.url }}" class="card-img-top" alt="عکس پروفایل">
+                                <div class="card-body profile-description">
+                                    <h5 class="card-title text-center">{{ manager.full_name }}</h5>
+                                    <h6 class="card-text text-center">سمت : {{ manager.position }}</h6>
+                                    <p class="card-text text-center">
+                                        {{ manager.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="container mb-5 about-aria-box">
+            <div class="row">
+                <div class="col-12">
+                    <div class="logo-img text-center">
+                        <img src="{{ about_us.logo.url }}" alt="{{ about_us.keyword_three }}">
+                    </div>
+                </div>
+                <div class="col-12 mt-3">
+                    <p class="text-center">
+                        {{ about_us.description_one }}
+                    </p>
+                    <p class="text-center">
+                        {{ about_us.description_two }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+<div class="panel-navbar-laptop">
+    <div class="panel-nav-logo text-center">
+        <img src="/static/images/logo/logo_aria_complex_prev_ui.png" alt="">
+    </div>
+    <div class="navbar-panel mt-3">
+        <div class="nav-nav-panel">
+            <ul>
+                <li class="nav-item">
+                    <a href="{% url 'user_panel_dashboard_page' %}" class="nav-link {% if request.resolver_match.url_name == 'user_panel_dashboard_page' %}active{% endif %}">
+                        <i class="bi bi-house-door"></i>
+                        پروفایل
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'user_paid_shopping' %}" class="nav-link {% if request.resolver_match.url_name == 'user_paid_shopping' %}active{% endif %}">
+                        <i class="bi bi-cart-check"></i>
+                        تاریخچه پرداختی ها
+                        <span class="badge bg-danger ms-1">{{ user_paid_count }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'user_basket_page' %}" class="nav-link {% if request.resolver_match.url_name == 'user_basket_page' %}active{% endif %}">
+                        <i class="bi bi-cart-plus"></i>
+                        سبد خرید من
+                        <span class="badge bg-danger ms-1">{{ user_basket_count }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'message_box_page' %}" class="nav-link {% if request.resolver_match.url_name == 'message_box_page' %}active{% endif %}">
+                        <i class="bi bi-envelope-paper"></i>
+                        پیام ها
+                        <span class="badge bg-danger ms-1">{{ message_count }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'announcements_page' %}" class="nav-link {% if request.resolver_match.url_name == 'announcements_page' %}active{% endif %}">
+                        <i class="bi bi-bell"></i>
+                        اطلاعیه ها
+                        <span class="badge bg-danger ms-1">{{ announcement_count }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'user_ticket_page' %}" class="nav-link  {% if request.resolver_match.url_name == 'user_ticket_page' %}active{% endif %}">
+                        <i class="bi bi-chat-square-text"></i>
+                        تیکت به پشتیبانی
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'discount_code_page' %}" class="nav-link  {% if request.resolver_match.url_name == 'discount_code_page' %}active{% endif %}">
+                        <i class="bi bi-upc-scan"></i>
+                        کد تخفیف
+                        <span class="badge bg-danger ms-1">{{ discount_code_count }}</span>
+                    </a>
+                </li>
+                <div class="line-divider mt-3 mb-3"></div>
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}" class="nav-link">
+                        <i class="bi bi-box-arrow-right"></i>
+                        خروج از حساب کاربری
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

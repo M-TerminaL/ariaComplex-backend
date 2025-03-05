@@ -1,0 +1,104 @@
+{% extends 'shared/base.html' %}
+{% load render_partial %}
+{% load jalali_tags %}
+{% load poll_extras %}
+
+{% block title %}
+    جزییات خرید | مجموعه آریا
+{% endblock %}
+
+{% block content %}
+    <section class="mt-lg-5 mt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="d-none d-lg-block col-lg-3 mb-3 mt-lg-5">
+                    {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+                </div>
+
+                <div class="col-lg-9 mb-5 pe-0">
+                    <div class="main-profile-content">
+                        {% render_partial 'user_panel_module.views.user_panel_header_component' %}
+                        {% if order.orderdetail_set %}
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <p class="alert alert-warning">
+                                            به همراه داشتن <span class="text-demibold text-danger">کد سفارش،</span> هنگام
+                                            ثبت نام در مجموعه الزامیست.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <h1 class="header-paid text-success text-center">جزییات سفارشات پرداخت شده</h1>
+
+
+                            <div class="paid-table mt-5 table-responsive">
+                                <table class="table-paid" id="last-paid">
+                                    <thead class="text-center">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">آیتم</th>
+                                        <th scope="col">شناسه</th>
+                                        <th scope="col">نوع خدمات</th>
+                                        <th scope="col">تعداد</th>
+                                        <th scope="col">کد سفارش</th>
+                                        <th scope="col">مبلغ پرداختی (تومان)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    {% for detail in order.orderdetail_set.all %}
+                                        <tr>
+
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ detail.id }}</td>
+                                            <td>{{ detail.package.package_name }}</td>
+                                            <td>{{ detail.package.category.category.title }}</td>
+                                            <td>{{ detail.count }}</td>
+                                            <td class="english">{{ detail.tracking_code }}</td>
+                                            <td>{{ detail.final_price | three_digits_currency }}</td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <p class="alert alert-warning">
+                                            آیتمی برای نمایش وجود ندارد
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <button class="btn btn-primary menu-panel-dashboard d-lg-none" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="bi bi-card-list"></i>
+        <!-- <span>منو</span> -->
+    </button>
+
+    <section id="offcanvas-content">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+             aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

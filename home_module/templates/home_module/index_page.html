@@ -1,0 +1,162 @@
+{% extends 'shared/base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+{% block meta_description %}
+    <meta name="description" content="{{ title_des_slider.meta_description }}">
+{% endblock %}
+
+{% block title %}
+    صفحه اصلی | مجموعه آریا
+{% endblock %}
+
+{% block header_references %}
+    <style>
+        {% for service in services %}
+            .svc-{{ forloop.counter }} {
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.9) 100%), url('{{service.bg_img.url}}') center/cover no-repeat;
+                {#object-fit: cover;#}
+            }
+
+            @media screen and(min-width: 992px) {
+                .svc-{{ forloop.counter }} {
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.9) 100%), url('{{service.bg_img.url}}') center/cover no-repeat;
+                background-attachment: fixed;
+            }
+            }
+        {% endfor %}
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <!-- main section -->
+    <main id="main" class="mt-lg-3">
+        <section class="section">
+            <div class="swiper mySwiper swiper-container">
+                <div class="slider-description">
+                    <h1 id="str" class="title-slider"></h1>
+                    <p class="para-slider">
+                        {{ title_des_slider.description }}
+                    </p>
+                </div>
+                <div class="swiper-wrapper">
+                    {% for slider in sliders %}
+                        <div id="swiper-slide1" class="swiper-slide position-relative">
+                            {% thumbnail slider.desktop_img "4096x3072" quality=100 crop="center" as im %}
+                                <img src="{{ im.url }}" class="img-fluid">
+                            {% endthumbnail %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <section class="price-item-list-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="title-price" id="index-title-services-top">معرفی خدمات ما</h3>
+                        <div class="d-flex justify-content-center mb-2">
+                            <img src="{% static 'images/arrow.png' %}" alt="آریا" class="d-block">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for service in services %}
+                        <div class="col-6 col-lg-4 gy-4">
+                            <div class="price-item-list-container">
+                                <p>{{ service.title }}</p>
+                                <div class="rating-and-view-box d-md-flex justify-content-between">
+                                    <div class="star-container">
+                                        <span><i class="bi bi-star-fill"></i></span>
+                                        <span><i class="bi bi-star-fill"></i></span>
+                                        <span><i class="bi bi-star-fill"></i></span>
+                                        <span><i class="bi bi-star-fill"></i></span>
+                                        <span><i class="bi bi-star-fill"></i></span>
+                                    </div>
+                                    <a href="{% url 'services-detail' slug=service.svc_cat.slug %}">مشاهده</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+        {% for service in services %}
+            <section class="section-main">
+                <article class="services svc-{{ forloop.counter }} mb-5">
+                    <div class="services-title">
+                        <h3 class="">{{ service.title }}</h3>
+                        <img src="{% static 'images/line-servises-arrow/services-line-arrow-9.png' %}"
+                             alt="مجموعه فرهنگی ورزشی آریا">
+                    </div>
+                    <div class="container-fluid mt-5 pt-5 p-4">
+                        <div class="row  article-services-box">
+                            <div class="col12 col-lg-6 ">
+                                <div class="swiper mySwiper swiper-container1">
+                                    <div class="swiper-wrapper swiper-wrapper1">
+
+                                        {% for slider in service.sliders.all %}
+                                            <div id="swiper-slide2" class="swiper-slide">
+                                                {% thumbnail slider.img_slider "x600" quality=100 crop="center" as im %}
+                                                    <img src="{{ im.url }}" class="img-fluid" alt="بهترین خدمات ورزشی">
+                                                {% endthumbnail %}
+                                            </div>
+                                        {% endfor %}
+
+
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                            <div class="col12 col-lg-6  p-4  pt-md-5 article-service-description">
+                                <p>
+                                    {{ service.short_description }}
+                                </p>
+                                <h4>برخی امکانات</h4>
+                                <ul class="Possibilities-items">
+
+                                    {% for items in service.items.all %}
+                                        <li>{{ items.title }}</li>
+                                    {% endfor %}
+
+                                </ul>
+                                <a href="{% url 'services-detail' slug=service.svc_cat.slug %}">بیشتر بدانید</a>
+                                <a href="" class="time-box" aria-disabled="true">
+                                    <i class="bi bi-clock"></i>
+                                    {{ service.work_time }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        {% endfor %}
+    </main>
+    <!-- End Of main Section Content -->
+{% endblock %}
+
+{% block footer_references %}
+{#    <script src="{% static 'js/app1.js' %}"></script> <!-- Auto write title of slider in index.html -->#}
+
+    <script>
+
+    // writing automatically in slider header box //
+
+    let string = "{{ title_des_slider.title }}";
+    let str = document.getElementById("str");
+    let split = string.split("");
+
+
+    (function anim(){
+    let running = setTimeout(anim, 100);
+    split.length > 0 ? str.innerHTML += split.shift(): clearTimeout(running);
+    })();
+
+    // end writing automatically in slider header box //
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,148 @@
+{% load poll_extras %}
+
+{% if order.orderdetail_set.all %}
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-12 alert alert-warning">
+                <p>برای تغییر تعداد پکیج های داخل سبد خرید خود حتما از کنترلر های افزایش یا
+                    کاهش تعداد استفاده
+                    نمایید</p>
+                <p>هر کد تخفیف یک بار قابل استفاده می باشد</p>
+
+            </div>
+        </div>
+    </div>
+
+    <h1 class="header-paid text-danger text-center">سبد خرید من</h1>
+    <div class="paid-table mt-5 table-responsive user-basket" id="user-bakset">
+        <table class="table-paid">
+            <thead class="text-center">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">آیتم</th>
+                <th scope="col">نوع خدمات</th>
+                <th scope="col">تعداد</th>
+                <th scope="col">مبلغ با تخفیف (تومان)</th>
+                <th scope="col">قیمت کل</th>
+                <th scope="col">حذف سفارش</th>
+
+            </tr>
+            </thead>
+            <tbody class="text-center">
+
+            {% for detail in order.orderdetail_set.all %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ detail.package.package_name }}</td>
+                    <td>{{ detail.package.category.category.title }}</td>
+                    <td class="d-flex gap-1 ms-xl-5">
+                        <div class="mt-1 text-center">
+                            <a id="increase" onclick="changeOrderDetailCount({{ detail.id }}, 'increase' )">
+                                <i class="bi bi-arrow-up-short"></i>
+                            </a>
+                        </div>
+                        <input type="number" name="" id="" value="{{ detail.count }}"
+                               class="text-center input-buy-num">
+                        <div class="mt-1 text-center">
+                            <a id="decrease" onclick="changeOrderDetailCount({{ detail.id }}, 'decrease')">
+                                <i class="bi bi-arrow-down-short"></i>
+                            </a>
+                        </div>
+                    </td>
+                    {% if detail.package.discount_number and detail.package.discount_title %}
+                        <td>{{ detail.package.discount_price | three_digits_currency }}</td>
+                    {% else %}
+                        <td>{{ detail.package.price | three_digits_currency }}</td>
+                    {% endif %}
+
+
+                    {% if detail.package.discount_number and detail.package.discount_title %}
+                        <td>
+                            {% multiply detail.package.discount_price detail.count %}
+                        </td>
+                    {% else %}
+                        <td>
+                            {% multiply detail.package.price detail.count %}
+                        </td>
+                    {% endif %}
+
+
+
+                    <td>
+                        <a onclick="removeOrderDetail({{ detail.id }})"
+                           id="remove-order-detail">
+                            <i class="bi bi-x-circle"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+            <tfoot class="text-center">
+            <tr>
+                <th scope="row">#</th>
+                <td colspan="4">
+                    کد تخفیف دارید ؟
+                    <input type="text" name="" id="discount-code">
+                </td>
+                <td class="text-extrabold">{{ sum | three_digits_currency }}</td>
+                <td>
+                    <a onclick="calculateTotalPriceWithDiscountCode()" class="text-extrabold cursor-pointer">اعمال کد تخفیف / ادامه خرید</a>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="invoice-container mt-5 d-block">
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <div class="invoice">
+                    <ul class="container">
+                        <li class="row">
+                            <p class="col-6">مجموع سبد خرید با تخفیف عمومی :</p>
+                            <p class="col-6 text-end"> {{ sum | three_digits_currency }}
+                                تومان</p>
+                        </li>
+                        <li class="row">
+                            <p class="col-6">مبلغ تخفیف خورده با کد تخفیف :</p>
+                            {% if discount_price %}
+                                <p class="col-6 text-end"> {{ discount_price | three_digits_currency }}
+                                    تومان</p>
+                            {% else %}
+                                <p class="col-6 text-end"> 0
+                                    تومان</p>
+                            {% endif %}
+                        </li>
+                        <li class="row">
+                            <p class="col-6">مبلغ نهایی :</p>
+                            {% if total_price_with_discount_code %}
+                                <p class="col-6 text-end"> {{ total_price_with_discount_code | three_digits_currency }}
+                                    تومان</p>
+                            {% else %}
+                                <p class="col-6 text-end"> {{ sum | three_digits_currency }}
+                                    تومان</p>
+                            {% endif %}
+                        </li>
+                        <li class="text-center row">
+                            <div class="col-12">
+                                <a href="{% url 'request_payment' %}">پرداخت</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-warning text-center mt-5">
+                    <p>سبد خرید شما خالی می باشد</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

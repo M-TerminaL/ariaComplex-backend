@@ -1,0 +1,146 @@
+{% extends 'shared/base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+
+{% block meta_description %}
+    <meta name="description" content="{{ contact_us_setting.meta_description }}">
+{% endblock %}
+
+{% block title %}
+    تماس با ما | مجموعه آریا
+{% endblock %}
+
+{% block content %}
+
+    <main class="section mt-lg-3 ps-lg-4 pe-lg-4">
+        <div class="header-img-service-box position-relative contact-us-header-box">
+            {% thumbnail contact_us_setting.header_img "x600" quality=100 crop="center" as im %}
+                <img src="{{ im.url }}" class="img-fluid" alt="{{ contact_us_setting.keyword_one }}">
+            {% endthumbnail %}
+            <div class="img-content-services position-absolute top-50 start-50 translate-middle">
+                <h1 class="title-img text-center p-3 rounded-5">{{ contact_us_setting.header_title }}</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="table-box mt-5">
+                        <div class="title-table">
+                            <h2 class="text-center text-success">{{ contact_us_setting.header_phone_title }}</h2>
+                        </div>
+
+                        <div class="paid-table mt-4 mb-5 table-responsive" id="edit-font">
+                            <table class="table-paid" id="last-paid">
+                                <thead class="text-center">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">بخش</th>
+                                    <th scope="col">شماره تماس</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                {% for phone in contact_us_setting.phone_table.all %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ phone.the_part }}</td>
+                                        <td>{{ phone.phone }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row contact-box align-items-center">
+                        <div class="col-12 col-md-3 contact-1">
+
+                            {% thumbnail contact_us_setting.building_img_one "x600" quality=100 crop="center" as im %}
+                                <img src="{{ im.url }}" class="img-fluid" alt="{{ contact_us_setting.keyword_two }}">
+                            {% endthumbnail %}
+
+                        </div>
+                        <div class="col-12 col-md-6 des-contact mt-3">
+                            <h2>{{ contact_us_setting.title_sm_img_one }}</h2>
+                            <div class="d-flex justify-content-center mb-2">
+                                <img src="{% static 'images/arrow.png' %}" alt="{{ contact_us_setting.keyword_four }}"
+                                     class="d-block">
+                            </div>
+                            <h4>{{ contact_us_setting.title_sm_img_two }}</h4>
+                            <p>{{ contact_us_setting.address }}</p>
+                        </div>
+                        <div class="col-12 col-md-3 contact-1">
+
+                            {% thumbnail contact_us_setting.building_img_two "x600" quality=100 crop="center" as im %}
+                                <img src="{{ im.url }}" class="img-fluid" alt="{{ contact_us_setting.keyword_three }}">
+                            {% endthumbnail %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="container mt-3 mb-3">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <form action="{% url 'contact_us_page' %}" method="post">
+                                {% csrf_token %}
+
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">نام شما</label>
+
+                                    {{ contact_us.full_name }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput2" class="form-label">ایمیل شما</label>
+                                    {{ contact_us.email }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput3" class="form-label">شماره تماس</label>
+                                    {{ contact_us.phone }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput4" class="form-label">موضوع</label>
+                                    {{ contact_us.subject }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">پیام شما</label>
+                                    {{ contact_us.text }}
+                                </div>
+                                <button type="submit" class="btn-form">ارسال</button>
+
+                            </form>
+                            {% if contact_us.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                                    <p>{{ contact_us.full_name.errors }}</p>
+                                    <p>{{ contact_us.email.errors }}</p>
+                                    <p>{{ contact_us.phone.errors }}</p>
+                                    <p>{{ contact_us.subject.errors }}</p>
+                                    <p>{{ contact_us.text.errors }}</p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            {% endif %}
+
+                            {% if contact_us.is_valid %}
+                                <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                                    <p>{{ success }}</p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                        <div class="col-12 col-md-6 map ">
+                            <div class="map-container">
+                                <iframe src="{{ contact_us_setting.addr_link }}"
+                                        width="600" height="450" allowfullscreen="" loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

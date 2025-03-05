@@ -1,0 +1,88 @@
+{% extends 'shared/base.html' %}
+{% load render_partial %}
+
+{% block title %}
+    کد تخفیف | مجموعه آریا
+{% endblock %}
+
+{% block content %}
+    <section class="mt-lg-5 mt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="d-none d-lg-block col-lg-3 mb-3 mt-lg-5">
+                    {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+                </div>
+
+                <div class="col-lg-9 mb-5 pe-0">
+                    <div class="main-profile-content">
+
+                        {% render_partial 'user_panel_module.views.user_panel_header_component' %}
+
+
+                        {% if discount_codes %}
+                            <div class="ticket-box mt-3">
+                                <h6 class="text-center text-danger text-bold">کدهای تخفیف</h6>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        {% for discount in discount_codes %}
+                                            <div class="col-12">
+                                                <div class="card" id="discount-box">
+                                                    <div class="card-body text-center">
+                                                        <p class="card-text text-center mt-2">
+                                                            {{ discount.code }}
+                                                        </p>
+                                                        <span class="text-thin text-light text-bg-primary p-2 rounded-5">
+                                                    {{ discount.amount }}%
+                                                </span>
+                                                    </div>
+                                                    <div class="card-footer text-center text-small">
+                                                <span>
+                                                    تاریخ اعتبار تا :
+                                                    {{ discount.expire_date }}
+                                                </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="alert alert-warning text-center">
+                                            شما کد تخفیف ندارید
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <button class="btn btn-primary menu-panel-dashboard d-lg-none" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="bi bi-card-list"></i>
+        <!-- <span>منو</span> -->
+    </button>
+
+    <section id="offcanvas-content">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+             aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

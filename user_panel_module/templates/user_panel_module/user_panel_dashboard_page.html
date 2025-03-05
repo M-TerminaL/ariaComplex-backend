@@ -1,0 +1,88 @@
+{% extends 'shared/base.html' %}
+{% load poll_extras %}
+{% load jalali_tags %}
+{% load render_partial %}
+
+
+{% block title %}
+    داشبورد | مجموعه آریا
+{% endblock %}
+
+{% block content %}
+
+    <section class="mt-lg-5 mt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="d-none d-lg-block col-lg-3 mb-3 mt-lg-5">
+                    {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+                </div>
+
+                <div class="col-lg-9 mb-5 pe-0">
+                    <div class="main-profile-content">
+                        {% render_partial 'user_panel_module.views.user_panel_header_component' %}
+                             <h1 class="header-paid text-success text-center">آخرین سفارشات پرداخت شده</h1>
+                        {% if orders %}
+                        <div class="paid-table mt-5 table-responsive">
+                            <table class="table-paid" id="last-paid">
+                                <thead class="text-center">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">شناسه</th>
+                                    <th scope="col">تاریخ تایید فاکتور</th>
+                                    <th scope="col">قیمت نهایی خرید (تومان)</th>
+                                    <th scope="col">دستورات</th>
+
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                {% for order in orders %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.payment_date | to_jalali }}</td>
+                                        <td>{{ order.final_order_price | three_digits_currency }}</td>
+                                        <td>
+                                            <a href="{% url 'user_paid_shopping_details' order_id=order.id %}" class="btn btn-success">
+                                                جزییات
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                           {% else %}
+                           <div class="container mt-5">
+                           <div class="row">
+                               <div class="col-12 text-center">
+                                   <p class="alert alert-warning">
+                                       آیتمی برای نمایش وجود ندارد
+                                   </p>
+                               </div>
+                           </div>
+                           </div>
+                       {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <button class="btn btn-primary menu-panel-dashboard d-lg-none" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="bi bi-card-list"></i>
+    </button>
+    <section id="offcanvas-content">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+             aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
